@@ -1,0 +1,20 @@
+token = "YOUR TOKEN"
+
+
+[[filters]]
+regexp_list = [
+  "fail",
+  "error",
+]
+[filters.channel]
+id = "CHANNEL1 ID"
+name = "CHANNEL1 NAME"
+
+
+[[filters]]
+regexp_list = [
+  "test\\d",
+]
+[filters.channel]
+id = "CHANNEL2 ID"
+name = "CHANNEL2 NAME"
