@@ -1,5 +1,11 @@
 # filter slack message
 
+#install
+
+```shell-session
+$ go get github.com/mizkei/filack
+```
+
 # config
 
 create 'conf.toml'
@@ -29,6 +35,14 @@ name = "CHANNEL NAME2"
 
 # usage
 
+- linux
+
 ```shell-session
-./filack | while read text; do notify-send "$text"; done
+$ ./filack | while read text; do notify-send "$text"; done
+```
+
+- mac
+
+```shell-session
+$ ./filack | while read text; do osascript  -e 'display notification "'"$text"'" with title "slack"'
 ```
