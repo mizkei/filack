@@ -44,5 +44,5 @@ $ ./filack | while read text; do notify-send "$text"; done
 - mac
 
 ```shell-session
-$ ./filack | while read text; do osascript  -e 'display notification "'"$text"'" with title "slack"'
+$ ./filack | while read text; do osascript  -e 'display notification "'"$text"'" with title "slack"'; done
 ```
