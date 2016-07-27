@@ -33,16 +33,24 @@ id = "CHANNEL ID2"
 name = "CHANNEL NAME2"
 ```
 
+default config file path is `$HOME/.config/filack/conf.toml`
+
+command line options
+
+```shell-session
+$ filack --config=config/file/path
+```
+
 # usage
 
 - linux
 
 ```shell-session
-$ ./filack | while read text; do notify-send "$text"; done
+$ filack | while read text; do notify-send "$text"; done
 ```
 
 - mac
 
 ```shell-session
-$ ./filack | while read text; do osascript  -e 'display notification "'"$text"'" with title "slack"'; done
+$ filack | while read text; do osascript  -e 'display notification "'"$text"'" with title "slack"'; done
 ```

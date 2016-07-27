@@ -1,7 +1,10 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
+	"os"
 	"regexp"
 
 	"github.com/BurntSushi/toml"
@@ -35,8 +38,13 @@ func (f *Filter) CheckText(msg string) bool {
 }
 
 func main() {
+	var confPath string
+
+	flag.StringVar(&confPath, "config", "$HOME/.config/filack/conf.toml", "config file path")
+	flag.Parse()
+
 	var conf Conf
-	if _, err := toml.DecodeFile("conf.toml", &conf); err != nil {
+	if _, err := toml.DecodeFile(os.ExpandEnv(confPath), &conf); err != nil {
 		panic(err)
 	}
 
@@ -73,6 +81,7 @@ Loop:
 					}
 				}
 			case *slack.InvalidAuthEvent:
+				log.Println("error: Invalid Auth")
 				break Loop
 			default:
 			}
