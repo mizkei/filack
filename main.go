@@ -18,13 +18,8 @@ type Conf struct {
 
 type Filter struct {
 	Channel    Channel  `toml:"channel"`
-	RegexpList []string `toml:"regexp_list"`
+	RegexpList []Regexp `toml:"regexp_list"`
 	ReList     []*regexp.Regexp
-}
-
-type Channel struct {
-	ID   string `toml:"id"`
-	Name string `toml:"name"`
 }
 
 func (f *Filter) CheckText(msg string) bool {
@@ -35,6 +30,30 @@ func (f *Filter) CheckText(msg string) bool {
 	}
 
 	return false
+}
+
+func (f *Filter) CompileRegexpList() {
+	for _, rx := range f.RegexpList {
+		var s string
+		if rx.Flags == "" {
+			s = rx.Query
+		} else {
+			s = fmt.Sprintf("(?%s)%s", rx.Flags, rx.Query)
+		}
+		r := regexp.MustCompile(s)
+
+		f.ReList = append(f.ReList, r)
+	}
+}
+
+type Regexp struct {
+	Query string `toml:"query"`
+	Flags string `toml:"flags"`
+}
+
+type Channel struct {
+	ID   string `toml:"id"`
+	Name string `toml:"name"`
 }
 
 func main() {
@@ -49,15 +68,8 @@ func main() {
 	}
 
 	// check the regexp syntax
-	for i, f := range conf.Filters {
-		for _, s := range f.RegexpList {
-			r, err := regexp.Compile(s)
-			if err != nil {
-				panic(err)
-			}
-
-			conf.Filters[i].ReList = append(conf.Filters[i].ReList, r)
-		}
+	for i := range conf.Filters {
+		conf.Filters[i].CompileRegexpList()
 	}
 
 	api := slack.New(conf.Token)
