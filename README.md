@@ -15,22 +15,26 @@ token = "YOUR TOKEN"
 
 
 [[filters]]
-regexp_list = [
-  "fail",
-  "error",
-]
-[filters.channel]
-id = "CHANNEL ID"
-name = "CHANNEL NAME"
+  [[filters.regexp_list]]
+    query = "fail"
+    flags = "im"
+  [[filters.regexp_list]]
+    query = "error"
+    flags = "i"
+
+  [filters.channel]
+    id = "CHANNEL1 ID"
+    name = "CHANNEL1 NAME"
 
 
 [[filters]]
-regexp_list = [
-  "check",
-]
-[filters.channel]
-id = "CHANNEL ID2"
-name = "CHANNEL NAME2"
+  [[filters.regexp_list]]
+    query = "test\d"
+    flags = "im"
+
+  [filters.channel]
+    id = "CHANNEL2 ID"
+    name = "CHANNEL2 NAME"
 ```
 
 default config file path is `$HOME/.config/filack/conf.toml`
